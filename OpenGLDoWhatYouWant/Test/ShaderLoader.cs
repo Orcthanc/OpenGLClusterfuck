@@ -7,7 +7,7 @@ namespace OpenGLDoWhatYouWant
     class ShaderLoader
     {
 
-        public static int createShader(String file, ShaderType shadertype)
+        public static int CreateShader(String file, ShaderType shadertype)
         {
             int shader = GL.CreateShader(shadertype);
             using (StreamReader sr = File.OpenText(file))
@@ -15,8 +15,7 @@ namespace OpenGLDoWhatYouWant
                 GL.ShaderSource(shader, sr.ReadToEnd());
             }
             GL.CompileShader(shader);
-            int status;
-            GL.GetShader(shader, ShaderParameter.CompileStatus, out status);
+            GL.GetShader(shader, ShaderParameter.CompileStatus, out int status);
             if (status != 1)
             {
                 string info;
@@ -27,7 +26,7 @@ namespace OpenGLDoWhatYouWant
             return shader;
         }
 
-        public static void createProgram(int program, bool deleteShaders, params int[] shaders)
+        public static void CreateProgram(int program, bool deleteShaders, params int[] shaders)
         {
             foreach (int i in shaders)
             {

@@ -22,14 +22,14 @@ namespace OpenGLDoWhatYouWant
 
             program = GL.CreateProgram();
 
-            int vs = ShaderLoader.createShader("./defaultVertex.glsl", ShaderType.VertexShader);
-            int fs = ShaderLoader.createShader("./defaultFragment.glsl", ShaderType.FragmentShader);
+            int vs = ShaderLoader.CreateShader("./defaultVertex.glsl", ShaderType.VertexShader);
+            int fs = ShaderLoader.CreateShader("./defaultFragment.glsl", ShaderType.FragmentShader);
 
             vao = GL.GenVertexArray();
             GL.BindVertexArray(vao);
             vbo = GL.GenBuffer();
 
-            ShaderLoader.createProgram(program, true, vs, fs);
+            ShaderLoader.CreateProgram(program, true, vs, fs);
 
             float[] data =
             {
