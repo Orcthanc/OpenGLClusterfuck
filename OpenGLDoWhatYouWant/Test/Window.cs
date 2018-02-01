@@ -48,21 +48,21 @@ namespace OpenGLDoWhatYouWant
             // Some VertexData (Simple Triangle)
             float[] data =
             {
-                0.0f,   0.5f,   0.0f,
-                0.0f,  -0.5f,   0.5f,
-               -0.5f,  -0.5f,  -0.5f,
+                0.0f,   0.5f,   0.0f,  -1.0f,   0.25f,  0.5f,
+                0.0f,  -0.5f,   0.5f,  -1.0f,   0.25f,  0.5f,
+               -0.5f,  -0.5f,  -0.5f,  -1.0f,   0.25f,  0.5f,
 
-                0.0f,   0.5f,   0.0f,
-                0.5f,  -0.5f,  -0.5f,
-                0.0f,  -0.5f,   0.5f,
+                0.0f,   0.5f,   0.0f,   1.0f,   0.25f,  0.5f,
+                0.5f,  -0.5f,  -0.5f,   1.0f,   0.25f,  0.5f,
+                0.0f,  -0.5f,   0.5f,   1.0f,   0.25f,  0.5f,
 
-                0.0f,   0.5f,   0.0f,
-               -0.5f,  -0.5f,  -0.5f,
-                0.5f,  -0.5f,  -0.5f,
+                0.0f,   0.5f,   0.0f,   0.0f,   0.5f,  -1.0f,
+               -0.5f,  -0.5f,  -0.5f,   0.0f,   0.5f,  -1.0f,
+                0.5f,  -0.5f,  -0.5f,   0.0f,   0.5f,  -1.0f,
 
-                0.0f,  -0.5f,   0.5f,
-                0.5f,  -0.5f,  -0.5f,
-               -0.5f,  -0.5f,  -0.5f,
+                0.0f,  -0.5f,   0.5f,   0.0f,  -1.0f,   0.0f,
+                0.5f,  -0.5f,  -0.5f,   0.0f,  -1.0f,   0.0f,
+               -0.5f,  -0.5f,  -0.5f,   0.0f,  -1.0f,   0.0f
             };
 
             // Put's some data into the vbo assigned to the vao inside of the ArrayBuffer BufferTarget
@@ -76,7 +76,7 @@ namespace OpenGLDoWhatYouWant
 
             // Telling OpenGL how to read the array
             GL.VertexAttribPointer(
-                // Id (Used to get the data in the Vertex-Shader
+                // Id (Used to get the data in the Vertex-Shader)
                 0,
                 // How long one set of data is
                 3,
@@ -84,12 +84,16 @@ namespace OpenGLDoWhatYouWant
                 VertexAttribPointerType.Float,
                 // If the data should be normalized
                 false,
-                // Amount of bites after which the next set of data starts, relative to the start of the current set
-                3 * sizeof(float),
-                // Amount of bits after which the first set starts
+                // Amount of bites after which the next set of data starts, relative to the start of the current set (stride)
+                6 * sizeof(float),
+                // Amount of bits after which the first set starts (offset)
                 0);
+
+            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
+
             // Get's called after every VertexAttribPointer with the Id used in it to make it work
             GL.EnableVertexAttribArray(0);
+            GL.EnableVertexAttribArray(1);
 
         }
 
@@ -131,6 +135,22 @@ namespace OpenGLDoWhatYouWant
 
 
             // Draws things, considering all applied things (You can draw an vao 2 times if you apply different vectors and call this again)
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+
+
+            // Draws a second object
+            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(1.5f, 0, 0)), model);
+            
+            GL.UniformMatrix4(modelLoc, false, ref model);
+
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+
+
+            // Draw a third
+            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(-3f, 0, 0)), model);
+
+            GL.UniformMatrix4(modelLoc, false, ref model);
+
             GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
 
             // Doublebuffering
