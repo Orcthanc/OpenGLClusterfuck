@@ -45,7 +45,7 @@ namespace OpenGLDoWhatYouWant
             // Assigns the vbo to the thing found in the ArrayBuffer BufferTarget
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
-            // Some VertexData (Simple Triangle)
+            // Some VertexData (Simple Tetraeder (4 Triangles))
             float[] data =
             {
                 0.0f,   0.5f,   0.0f,  -1.0f,   0.25f,  0.5f,
