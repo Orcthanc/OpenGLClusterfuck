@@ -18,8 +18,7 @@ namespace OpenGLDoWhatYouWant
             GL.GetShader(shader, ShaderParameter.CompileStatus, out int status);
             if (status != 1)
             {
-                string info;
-                GL.GetShaderInfoLog(shader, out info);
+                GL.GetShaderInfoLog(shader, out string info);
                 Console.WriteLine(info);
             }
 
@@ -38,8 +37,7 @@ namespace OpenGLDoWhatYouWant
             GL.GetProgram(program, GetProgramParameterName.LinkStatus, out int status);
             if (status != 1)
             {
-                string info;
-                GL.GetProgramInfoLog(program, out info);
+                GL.GetProgramInfoLog(program, out string info);
                 Console.WriteLine(info);
             }
 
