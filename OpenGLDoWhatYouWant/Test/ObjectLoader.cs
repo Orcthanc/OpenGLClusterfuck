@@ -46,13 +46,18 @@ namespace Test
     class ObjectLoader
     {
 
-        public static float[] loadOBJTriangles(String fileName)
+        public static float[] LoadOBJTriangles(String fileName)
         {
             ReadOBJ(fileName, out Vector3[] verts, out Vector2[] texCoords, out Vector3[] normals, out Face[] faces);
 
-            //TODO
+            List<float> verticies = new List<float>();
 
-            return null;
+            foreach (Face f in faces)
+            {
+                //TODO
+            }
+
+            return verticies.ToArray();
         }
 
         public static void ReadOBJ(String fileName, out Vector3[] verts, out Vector2[] texCoords, out Vector3[] normals, out Face[] faces)
