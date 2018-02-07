@@ -81,7 +81,7 @@ namespace OpenGLDoWhatYouWant
             // Sample matrixes used to move the model
             // Loc-Rot-Scale of the model of the model
             Matrix4 model = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)Math.PI);
-            model = Matrix4.Mult(Matrix4.CreateFromAxisAngle(new Vector3(0f, 0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180), model);
+            model = Matrix4.Mult(Matrix4.CreateFromAxisAngle(new Vector3(0f, -0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180), model);
             model = Matrix4.Mult(Matrix4.CreateScale(0.5f, 0.5f, 0.5f), model);
             // Transform of the camera
             Matrix4 view = Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -3.0f));
