@@ -13,9 +13,36 @@ namespace OpenGLDoWhatYouWant
         Vector3 camForward = new Vector3(0, 0, -1);
         Vector3 camUp = new Vector3(0, 1, 0);
 
+        float camSpeed = 0.05f;
+
         public void MoveCamera(Vector3 dir)
         {
+            if(dir.X > 0)
+            {
+                camPos += camSpeed * camForward;
+            }
+            else if(dir.X < 0)
+            {
+                camPos -= camSpeed * camForward;
+            }
 
+            if (dir.Y > 0)
+            {
+                camPos += camSpeed * camUp;
+            }
+            else if (dir.Y < 0)
+            {
+                camPos -= camSpeed * camUp;
+            }
+
+            if (dir.Z > 0)
+            {
+                camPos += camSpeed * Vector3.Normalize(Vector3.Cross(camForward, camUp));
+            }
+            else if (dir.Z < 0)
+            {
+                camPos -= camSpeed * Vector3.Normalize(Vector3.Cross(camForward, camUp));
+            }
         }
     }
 }
