@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
     <Compile Include="FileType.cs" />
     <Compile Include="KeyboardHandler.cs" />
     <Compile Include="ObjectLoader.cs" />

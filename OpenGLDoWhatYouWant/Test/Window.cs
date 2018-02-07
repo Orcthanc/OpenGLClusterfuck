@@ -9,6 +9,8 @@ namespace OpenGLDoWhatYouWant
     {
         int program, vao, vbo, modelLength;
 
+        Matrix4 view;
+
         public Window(int width, int height) : base(width, height)
         {
         }
@@ -83,8 +85,10 @@ namespace OpenGLDoWhatYouWant
             Matrix4 model = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)Math.PI);
             model = Matrix4.Mult(Matrix4.CreateFromAxisAngle(new Vector3(0f, -0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180), model);
             model = Matrix4.Mult(Matrix4.CreateScale(0.5f, 0.5f, 0.5f), model);
-            // Transform of the camera
-            Matrix4 view = Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -3.0f));
+
+            // Updates the view Matrix
+            view = Matrix4.LookAt(camPos, camPos + camForward, camUp);
+
             // Apply perspective to everything
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(90f / 180 * (float)Math.PI, Program.sizeX / Program.sizeY, 0.1f, 100f);
 
