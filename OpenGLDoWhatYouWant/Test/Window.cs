@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace OpenGLDoWhatYouWant
 {
-    class Window : GameWindow
+    partial class Window : GameWindow
     {
         int program, vao, vbo, modelLength;
 
