@@ -1,6 +1,8 @@
 ﻿#version 430
+// Collects data out of the currently bound vbo according to the data stored in the currently bound vao (See GL.VertexAttribPointer)
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormal;
+layout (location = 1) in vec2 texCoords;
+layout (location = 2) in vec3 aNormal;
 
 // Things the shader outputs to another shader
 out vec3 Normal;

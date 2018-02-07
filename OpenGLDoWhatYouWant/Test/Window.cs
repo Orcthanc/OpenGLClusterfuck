@@ -7,7 +7,7 @@ namespace OpenGLDoWhatYouWant
 {
     class Window : GameWindow
     {
-        int program, vao, vbo;
+        int program, vao, vbo, modelLength;
 
         public Window(int width, int height) : base(width, height)
         {
@@ -24,7 +24,7 @@ namespace OpenGLDoWhatYouWant
             // Enables depth-checks to decide which object is rendered in the foreground
             GL.Enable(EnableCap.DepthTest);
             // Set's the color used to clear the background
-            GL.ClearColor(Color.Black);
+            GL.ClearColor(Color.Gray);
 
             // Creates a link to a program (Used to store shaders
             program = GL.CreateProgram();
@@ -45,25 +45,8 @@ namespace OpenGLDoWhatYouWant
             // Assigns the vbo to the thing found in the ArrayBuffer BufferTarget
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
-            // Some VertexData (Simple Tetraeder (4 Triangles))
-            float[] data =
-            {
-                0.0f,   0.5f,   0.0f,  -1.0f,   0.25f,  0.5f,
-                0.0f,  -0.5f,   0.5f,  -1.0f,   0.25f,  0.5f,
-               -0.5f,  -0.5f,  -0.5f,  -1.0f,   0.25f,  0.5f,
-
-                0.0f,   0.5f,   0.0f,   1.0f,   0.25f,  0.5f,
-                0.5f,  -0.5f,  -0.5f,   1.0f,   0.25f,  0.5f,
-                0.0f,  -0.5f,   0.5f,   1.0f,   0.25f,  0.5f,
-
-                0.0f,   0.5f,   0.0f,   0.0f,   0.5f,  -1.0f,
-               -0.5f,  -0.5f,  -0.5f,   0.0f,   0.5f,  -1.0f,
-                0.5f,  -0.5f,  -0.5f,   0.0f,   0.5f,  -1.0f,
-
-                0.0f,  -0.5f,   0.5f,   0.0f,  -1.0f,   0.0f,
-                0.5f,  -0.5f,  -0.5f,   0.0f,  -1.0f,   0.0f,
-               -0.5f,  -0.5f,  -0.5f,   0.0f,  -1.0f,   0.0f
-            };
+            // Load the data from an .obj using the ObjectLoader-class
+            float[] data = ObjectLoader.LoadOBJTriangles("./flyingRobot.obj", out modelLength);
 
             // Put's some data into the vbo assigned to the vao inside of the ArrayBuffer BufferTarget
             GL.BufferData(BufferTarget.ArrayBuffer,
@@ -74,26 +57,7 @@ namespace OpenGLDoWhatYouWant
                 // Some OpenGL-stuff used for performance-finetuning... Look it up before changing it
                 BufferUsageHint.StaticDraw);
 
-            // Telling OpenGL how to read the array
-            GL.VertexAttribPointer(
-                // Id (Used to get the data in the Vertex-Shader)
-                0,
-                // How long one set of data is
-                3,
-                // Type of the data
-                VertexAttribPointerType.Float,
-                // If the data should be normalized
-                false,
-                // Amount of bites after which the next set of data starts, relative to the start of the current set (stride)
-                6 * sizeof(float),
-                // Amount of bits after which the first set starts (offset)
-                0);
-
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
-
-            // Get's called after every VertexAttribPointer with the Id used in it to make it work
-            GL.EnableVertexAttribArray(0);
-            GL.EnableVertexAttribArray(1);
+            ObjectLoader.ConfigureVaoForOBJTriangles();
 
         }
 
@@ -116,8 +80,9 @@ namespace OpenGLDoWhatYouWant
 
             // Sample matrixes used to move the model
             // Loc-Rot-Scale of the model of the model
-            Matrix4 model = Matrix4.CreateFromAxisAngle(new Vector3(0f, 0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180);
-            model = Matrix4.Mult(Matrix4.CreateScale(1.5f, 1f, 1f), model);
+            Matrix4 model = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)Math.PI);
+            model = Matrix4.Mult(Matrix4.CreateFromAxisAngle(new Vector3(0f, -0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180), model);
+            model = Matrix4.Mult(Matrix4.CreateScale(0.5f, 0.5f, 0.5f), model);
             // Transform of the camera
             Matrix4 view = Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -3.0f));
             // Apply perspective to everything
@@ -136,7 +101,7 @@ namespace OpenGLDoWhatYouWant
 
             // Ligthing stuff
             Vector3 lightColor = new Vector3(1f, 1f, 1f);
-            Vector3 objectColor = new Vector3(0f, 0.8f, 0.8f);
+            Vector3 objectColor = new Vector3(1f, 1f, 1f);
             Vector3 lightPos = new Vector3(0f, 5f, 0f);
 
             int lightColorLoc = GL.GetUniformLocation(program, "lightColor");
@@ -149,24 +114,24 @@ namespace OpenGLDoWhatYouWant
             GL.Uniform3(lightPosLoc, ref lightPos);
 
 
-            // Draws things, considering all applied things (You can draw an vao 2 times if you apply different vectors and call this again)
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+            // Draws things, considering all applied things (You can draw an vbo 2 times if you apply different vectors and call this again)
+            GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
 
 
             // Draws a second object
-            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(1.5f, 0, 0)), model);
+            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(4f, 0, 0)), model);
             
             GL.UniformMatrix4(modelLoc, false, ref model);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
 
 
             // Draw a third
-            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(-3f, 0, 0)), model);
+            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(-8f, 0, 0)), model);
 
             GL.UniformMatrix4(modelLoc, false, ref model);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
 
             // Doublebuffering
             this.SwapBuffers();
