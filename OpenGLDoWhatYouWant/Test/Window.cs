@@ -24,7 +24,7 @@ namespace OpenGLDoWhatYouWant
             // Enables depth-checks to decide which object is rendered in the foreground
             GL.Enable(EnableCap.DepthTest);
             // Set's the color used to clear the background
-            GL.ClearColor(Color.Black);
+            GL.ClearColor(Color.Gray);
 
             // Creates a link to a program (Used to store shaders
             program = GL.CreateProgram();
@@ -47,6 +47,8 @@ namespace OpenGLDoWhatYouWant
 
             // Load the data from an .obj using the ObjectLoader-class
             float[] data = ObjectLoader.LoadOBJTriangles("./flyingRobot.obj");
+
+            Console.WriteLine(data.Length);
 
             // Put's some data into the vbo assigned to the vao inside of the ArrayBuffer BufferTarget
             GL.BufferData(BufferTarget.ArrayBuffer,
@@ -80,8 +82,9 @@ namespace OpenGLDoWhatYouWant
 
             // Sample matrixes used to move the model
             // Loc-Rot-Scale of the model of the model
-            Matrix4 model = Matrix4.CreateFromAxisAngle(new Vector3(0f, 0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180);
-            model = Matrix4.Mult(Matrix4.CreateScale(1.5f, 1f, 1f), model);
+            Matrix4 model = Matrix4.CreateFromAxisAngle(new Vector3(0, 1, 0), (float)Math.PI);
+            model = Matrix4.Mult(Matrix4.CreateFromAxisAngle(new Vector3(0f, 0.2f, 1f), (float)(Environment.TickCount / 20 % 360) * (float)Math.PI / 180), model);
+            model = Matrix4.Mult(Matrix4.CreateScale(0.5f, 0.5f, 0.5f), model);
             // Transform of the camera
             Matrix4 view = Matrix4.CreateTranslation(new Vector3(0.0f, 0.0f, -3.0f));
             // Apply perspective to everything
@@ -100,7 +103,7 @@ namespace OpenGLDoWhatYouWant
 
             // Ligthing stuff
             Vector3 lightColor = new Vector3(1f, 1f, 1f);
-            Vector3 objectColor = new Vector3(0f, 0.8f, 0.8f);
+            Vector3 objectColor = new Vector3(1f, 1f, 1f);
             Vector3 lightPos = new Vector3(0f, 5f, 0f);
 
             int lightColorLoc = GL.GetUniformLocation(program, "lightColor");
@@ -114,23 +117,23 @@ namespace OpenGLDoWhatYouWant
 
 
             // Draws things, considering all applied things (You can draw an vao 2 times if you apply different vectors and call this again)
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 25824);
 
 
             // Draws a second object
-            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(1.5f, 0, 0)), model);
+            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(4f, 0, 0)), model);
             
             GL.UniformMatrix4(modelLoc, false, ref model);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 25824);
 
 
             // Draw a third
-            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(-3f, 0, 0)), model);
+            model = Matrix4.Mult(Matrix4.CreateTranslation(new Vector3(-8f, 0, 0)), model);
 
             GL.UniformMatrix4(modelLoc, false, ref model);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 12);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, 25824);
 
             // Doublebuffering
             this.SwapBuffers();

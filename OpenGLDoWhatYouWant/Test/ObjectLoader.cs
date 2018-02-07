@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -92,17 +93,16 @@ namespace OpenGLDoWhatYouWant
                 for(int i = 1; i < f.Length - 1; i++)
                 {
                     verticies.AddRange(new float[] { verts[f.v[0]].X, verts[f.v[0]].Y, verts[f.v[0]].Z });
-                    verticies.AddRange(new float[] { verts[f.vt[0]].X, verts[f.vt[0]].Y });
-                    verticies.AddRange(new float[] { verts[f.vn[0]].X, verts[f.vn[0]].Y, verts[f.vn[0]].Z });
+                    verticies.AddRange(new float[] { texCoords[f.vt[0]].X, texCoords[f.vt[0]].Y });
+                    verticies.AddRange(new float[] { normals[f.vn[0]].X, normals[f.vn[0]].Y, normals[f.vn[0]].Z });
 
                     verticies.AddRange(new float[] { verts[f.v[i]].X, verts[f.v[i]].Y, verts[f.v[i]].Z });
-                    verticies.AddRange(new float[] { verts[f.vt[i]].X, verts[f.vt[i]].Y });
-                    verticies.AddRange(new float[] { verts[f.vn[i]].X, verts[f.vn[i]].Y, verts[f.vn[i]].Z });
+                    verticies.AddRange(new float[] { texCoords[f.vt[i]].X, texCoords[f.vt[i]].Y });
+                    verticies.AddRange(new float[] { normals[f.vn[i]].X, normals[f.vn[i]].Y, normals[f.vn[i]].Z });
 
                     verticies.AddRange(new float[] { verts[f.v[i + 1]].X, verts[f.v[i + 1]].Y, verts[f.v[i + 1]].Z });
-                    // TODO check if vt exists
-                    verticies.AddRange(new float[] { verts[f.vt[i + 1]].X, verts[f.vt[i + 1]].Y });
-                    verticies.AddRange(new float[] { verts[f.vn[i + 1]].X, verts[f.vn[i + 1]].Y, verts[f.vn[i + 1]].Z });
+                    verticies.AddRange(new float[] { texCoords[f.vt[i + 1]].X, texCoords[f.vt[i + 1]].Y });
+                    verticies.AddRange(new float[] { normals[f.vn[i + 1]].X, normals[f.vn[i + 1]].Y, normals[f.vn[i + 1]].Z });
                 }
             }
 
@@ -158,7 +158,7 @@ namespace OpenGLDoWhatYouWant
                             Console.WriteLine("[FATAL] Error occured while loading " + fileName + ". Perhaps the file is corrupt...");
                             break;
                         }
-                        vertsL.Add(new Vector3(float.Parse(temp[1]), float.Parse(temp[2]), float.Parse(temp[3])));
+                        vertsL.Add(new Vector3(float.Parse(temp[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(temp[2], CultureInfo.InvariantCulture.NumberFormat), float.Parse(temp[3], CultureInfo.InvariantCulture.NumberFormat)));
                     }
                     else if (temp[0].Equals("vt"))
                     {
@@ -167,7 +167,7 @@ namespace OpenGLDoWhatYouWant
                             Console.WriteLine("[FATAL] Error occured while loading " + fileName + ". Perhaps the file is corrupt...");
                             break;
                         }
-                        texCoordsL.Add(new Vector2(float.Parse(temp[1]), float.Parse(temp[2])));
+                        texCoordsL.Add(new Vector2(float.Parse(temp[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(temp[2], CultureInfo.InvariantCulture.NumberFormat)));
                     }
                     else if (temp[0].Equals("vn"))
                     {
@@ -176,7 +176,7 @@ namespace OpenGLDoWhatYouWant
                             Console.WriteLine("[FATAL] Error occured while loading " + fileName + ". Perhaps the file is corrupt...");
                             break;
                         }
-                        vertNormsL.Add(new Vector3(float.Parse(temp[1]), float.Parse(temp[2]), float.Parse(temp[3])));
+                        vertNormsL.Add(new Vector3(float.Parse(temp[1], CultureInfo.InvariantCulture.NumberFormat), float.Parse(temp[2], CultureInfo.InvariantCulture.NumberFormat), float.Parse(temp[3], CultureInfo.InvariantCulture.NumberFormat)));
                     }
                     else if (temp[0].Equals("g"))
                     {
