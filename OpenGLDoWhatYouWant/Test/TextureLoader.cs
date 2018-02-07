@@ -9,6 +9,11 @@ namespace OpenGLDoWhatYouWant
     class TextureLoader
     {
 
+        /// <summary>
+        /// Loads a image into OpenGL
+        /// </summary>
+        /// <param name="path">Where the file is saved</param>
+        /// <returns>An link to where the image is stored within OpenGL</returns>
         public static int LoadImage(string path)
         {
             Console.WriteLine(Path.GetFullPath(path));
@@ -17,6 +22,11 @@ namespace OpenGLDoWhatYouWant
             return LoadImage(bitmap);
         }
 
+        /// <summary>
+        /// Loads a image into OpenGL
+        /// </summary>
+        /// <param name="image">The bitmap to be loaded into OpenGL</param>
+        /// <returns>An link to where the image is stored within OpenGL</returns>
         public static int LoadImage(Bitmap image)
         {
             image.RotateFlip(RotateFlipType.RotateNoneFlipY);
