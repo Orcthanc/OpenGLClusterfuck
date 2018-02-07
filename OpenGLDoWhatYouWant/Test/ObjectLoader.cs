@@ -82,7 +82,7 @@ namespace OpenGLDoWhatYouWant
         /// </summary>
         /// <param name="fileName">Name of the .obj file</param>
         /// <returns>The Vertexdata as a float-array</returns>
-        public static float[] LoadOBJTriangles(String fileName)
+        public static float[] LoadOBJTriangles(String fileName, out int length)
         {
             ReadOBJ(fileName, out Vector3[] verts, out Vector2[] texCoords, out Vector3[] normals, out Face[] faces);
 
@@ -105,6 +105,8 @@ namespace OpenGLDoWhatYouWant
                     verticies.AddRange(new float[] { normals[f.vn[i + 1]].X, normals[f.vn[i + 1]].Y, normals[f.vn[i + 1]].Z });
                 }
             }
+
+            length = verticies.Count;
 
             return verticies.ToArray();
         }

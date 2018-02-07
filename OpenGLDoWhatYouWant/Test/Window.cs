@@ -7,7 +7,7 @@ namespace OpenGLDoWhatYouWant
 {
     class Window : GameWindow
     {
-        int program, vao, vbo;
+        int program, vao, vbo, modelLength;
 
         public Window(int width, int height) : base(width, height)
         {
@@ -46,9 +46,7 @@ namespace OpenGLDoWhatYouWant
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
             // Load the data from an .obj using the ObjectLoader-class
-            float[] data = ObjectLoader.LoadOBJTriangles("./flyingRobot.obj");
-
-            Console.WriteLine(data.Length);
+            float[] data = ObjectLoader.LoadOBJTriangles("./flyingRobot.obj", out modelLength);
 
             // Put's some data into the vbo assigned to the vao inside of the ArrayBuffer BufferTarget
             GL.BufferData(BufferTarget.ArrayBuffer,
@@ -116,8 +114,8 @@ namespace OpenGLDoWhatYouWant
             GL.Uniform3(lightPosLoc, ref lightPos);
 
 
-            // Draws things, considering all applied things (You can draw an vao 2 times if you apply different vectors and call this again)
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 25824);
+            // Draws things, considering all applied things (You can draw an vbo 2 times if you apply different vectors and call this again)
+            GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
 
 
             // Draws a second object
@@ -125,7 +123,7 @@ namespace OpenGLDoWhatYouWant
             
             GL.UniformMatrix4(modelLoc, false, ref model);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 25824);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
 
 
             // Draw a third
@@ -133,7 +131,7 @@ namespace OpenGLDoWhatYouWant
 
             GL.UniformMatrix4(modelLoc, false, ref model);
 
-            GL.DrawArrays(PrimitiveType.Triangles, 0, 25824);
+            GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
 
             // Doublebuffering
             this.SwapBuffers();
