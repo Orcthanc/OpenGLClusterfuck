@@ -45,25 +45,8 @@ namespace OpenGLDoWhatYouWant
             // Assigns the vbo to the thing found in the ArrayBuffer BufferTarget
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
-            // Some VertexData (Simple Tetraeder (4 Triangles))
-            float[] data =
-            {
-                0.0f,   0.5f,   0.0f,  -1.0f,   0.25f,  0.5f,
-                0.0f,  -0.5f,   0.5f,  -1.0f,   0.25f,  0.5f,
-               -0.5f,  -0.5f,  -0.5f,  -1.0f,   0.25f,  0.5f,
-
-                0.0f,   0.5f,   0.0f,   1.0f,   0.25f,  0.5f,
-                0.5f,  -0.5f,  -0.5f,   1.0f,   0.25f,  0.5f,
-                0.0f,  -0.5f,   0.5f,   1.0f,   0.25f,  0.5f,
-
-                0.0f,   0.5f,   0.0f,   0.0f,   0.5f,  -1.0f,
-               -0.5f,  -0.5f,  -0.5f,   0.0f,   0.5f,  -1.0f,
-                0.5f,  -0.5f,  -0.5f,   0.0f,   0.5f,  -1.0f,
-
-                0.0f,  -0.5f,   0.5f,   0.0f,  -1.0f,   0.0f,
-                0.5f,  -0.5f,  -0.5f,   0.0f,  -1.0f,   0.0f,
-               -0.5f,  -0.5f,  -0.5f,   0.0f,  -1.0f,   0.0f
-            };
+            // Load the data from an .obj using the ObjectLoader-class
+            float[] data = ObjectLoader.LoadOBJTriangles("./flyingRobot.obj");
 
             // Put's some data into the vbo assigned to the vao inside of the ArrayBuffer BufferTarget
             GL.BufferData(BufferTarget.ArrayBuffer,
@@ -74,26 +57,7 @@ namespace OpenGLDoWhatYouWant
                 // Some OpenGL-stuff used for performance-finetuning... Look it up before changing it
                 BufferUsageHint.StaticDraw);
 
-            // Telling OpenGL how to read the array
-            GL.VertexAttribPointer(
-                // Id (Used to get the data in the Vertex-Shader)
-                0,
-                // How long one set of data is
-                3,
-                // Type of the data
-                VertexAttribPointerType.Float,
-                // If the data should be normalized
-                false,
-                // Amount of bites after which the next set of data starts, relative to the start of the current set (stride)
-                6 * sizeof(float),
-                // Amount of bits after which the first set starts (offset)
-                0);
-
-            GL.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, 6 * sizeof(float), 3 * sizeof(float));
-
-            // Get's called after every VertexAttribPointer with the Id used in it to make it work
-            GL.EnableVertexAttribArray(0);
-            GL.EnableVertexAttribArray(1);
+            ObjectLoader.ConfigureVaoForOBJTriangles();
 
         }
 

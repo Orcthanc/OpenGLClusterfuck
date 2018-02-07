@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using OpenTK;
+using OpenTK.Graphics.OpenGL4;
 
 namespace OpenGLDoWhatYouWant
 {
@@ -45,7 +46,41 @@ namespace OpenGLDoWhatYouWant
 
     class ObjectLoader
     {
+        /// <summary>
+        /// Configures the currently bound vao to draw things inputed via the LoadOBJTriangles Method
+        /// </summary>
+        public static void ConfigureVaoForOBJTriangles()
+        {
+            // Telling OpenGL how to read the array
+            GL.VertexAttribPointer(
+                // Id (Used to get the data in the Vertex-Shader)
+                0,
+                // How long one set of data is
+                3,
+                // Type of the data
+                VertexAttribPointerType.Float,
+                // If the data should be normalized
+                false,
+                // Amount of bites after which the next set of data starts, relative to the start of the current set (stride)
+                8 * sizeof(float),
+                // Amount of bits after which the first set starts (offset)
+                0);
 
+            GL.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, 8 * sizeof(float), 3 * sizeof(float));
+
+            GL.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, 8 * sizeof(float), 5 * sizeof(float));
+
+            // Get's called after every VertexAttribPointer with the Id used in it to make it work
+            GL.EnableVertexAttribArray(0);
+            GL.EnableVertexAttribArray(1);
+            GL.EnableVertexAttribArray(2);
+        }
+
+        /// <summary>
+        /// Used to generate VertexData from a .obj-File
+        /// </summary>
+        /// <param name="fileName">Name of the .obj file</param>
+        /// <returns>The Vertexdata as a float-array</returns>
         public static float[] LoadOBJTriangles(String fileName)
         {
             ReadOBJ(fileName, out Vector3[] verts, out Vector2[] texCoords, out Vector3[] normals, out Face[] faces);
@@ -54,18 +89,45 @@ namespace OpenGLDoWhatYouWant
 
             foreach (Face f in faces)
             {
-                //TODO
+                for(int i = 1; i < f.Length - 1; i++)
+                {
+                    verticies.AddRange(new float[] { verts[f.v[0]].X, verts[f.v[0]].Y, verts[f.v[0]].Z });
+                    verticies.AddRange(new float[] { verts[f.vt[0]].X, verts[f.vt[0]].Y });
+                    verticies.AddRange(new float[] { verts[f.vn[0]].X, verts[f.vn[0]].Y, verts[f.vn[0]].Z });
+
+                    verticies.AddRange(new float[] { verts[f.v[i]].X, verts[f.v[i]].Y, verts[f.v[i]].Z });
+                    verticies.AddRange(new float[] { verts[f.vt[i]].X, verts[f.vt[i]].Y });
+                    verticies.AddRange(new float[] { verts[f.vn[i]].X, verts[f.vn[i]].Y, verts[f.vn[i]].Z });
+
+                    verticies.AddRange(new float[] { verts[f.v[i + 1]].X, verts[f.v[i + 1]].Y, verts[f.v[i + 1]].Z });
+                    // TODO check if vt exists
+                    verticies.AddRange(new float[] { verts[f.vt[i + 1]].X, verts[f.vt[i + 1]].Y });
+                    verticies.AddRange(new float[] { verts[f.vn[i + 1]].X, verts[f.vn[i + 1]].Y, verts[f.vn[i + 1]].Z });
+                }
             }
 
             return verticies.ToArray();
         }
 
+        /// <summary>
+        /// Just reads all the data from an .obj-File
+        /// </summary>
+        /// <param name="fileName">Name of the file</param>
+        /// <param name="verts">An Vector3-Array where all the coordinates of the verticies get stored</param>
+        /// <param name="texCoords">An Vector2-Array where all the Texture-Coordinates get stored</param>
+        /// <param name="normals">An Vector3-Array where all the normal-Vecs are stored</param>
+        /// <param name="faces">An Face-Array, where all faces are stored in the form of references to the other Arrays</param>
         public static void ReadOBJ(String fileName, out Vector3[] verts, out Vector2[] texCoords, out Vector3[] normals, out Face[] faces)
         {
             List<Vector3> vertsL = new List<Vector3>();
             List<Vector2> texCoordsL = new List<Vector2>();
             List<Vector3> vertNormsL = new List<Vector3>();
             List<Face> facesL = new List<Face>();
+
+            // Dummy coords because indexes in .objs start at one and not 0
+            vertsL.Add(new Vector3());
+            texCoordsL.Add(new Vector2());
+            vertNormsL.Add(new Vector3());
 
             using (StreamReader sr = File.OpenText(fileName))
             {
