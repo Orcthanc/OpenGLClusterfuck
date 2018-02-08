@@ -21,7 +21,7 @@ namespace OpenGLDoWhatYouWant
                 case Key.Escape:
                     Close();
                     break;
-                case Key.Space:
+                case Key.Home:
                     if (isWireframe)
                     {
                         GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
