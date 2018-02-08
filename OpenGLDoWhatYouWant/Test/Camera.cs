@@ -15,13 +15,29 @@ namespace OpenGLDoWhatYouWant
 
         float camSpeed = 0.05f;
 
+        public void UpdateCamera()
+        {
+            Vector3 move = new Vector3();
+
+            if (keyDownA)
+                move.X -= 1;
+            if (keyDownD)
+                move.X += 1;
+            if (keyDownS)
+                move.Z -= 1;
+            if (keyDownW)
+                move.Z += 1;
+
+            MoveCamera(move);
+        }
+
         public void MoveCamera(Vector3 dir)
         {
-            if(dir.X > 0)
+            if(dir.Z > 0)
             {
                 camPos += camSpeed * camForward;
             }
-            else if(dir.X < 0)
+            else if(dir.Z < 0)
             {
                 camPos -= camSpeed * camForward;
             }
@@ -35,11 +51,11 @@ namespace OpenGLDoWhatYouWant
                 camPos -= camSpeed * camUp;
             }
 
-            if (dir.Z > 0)
+            if (dir.X > 0)
             {
                 camPos += camSpeed * Vector3.Normalize(Vector3.Cross(camForward, camUp));
             }
-            else if (dir.Z < 0)
+            else if (dir.X < 0)
             {
                 camPos -= camSpeed * Vector3.Normalize(Vector3.Cross(camForward, camUp));
             }

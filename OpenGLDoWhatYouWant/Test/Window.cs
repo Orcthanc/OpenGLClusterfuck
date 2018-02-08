@@ -63,6 +63,13 @@ namespace OpenGLDoWhatYouWant
 
         }
 
+        protected override void OnUpdateFrame(FrameEventArgs e)
+        {
+            base.OnUpdateFrame(e);
+
+            UpdateCamera();
+        }
+
         /// <summary>
         /// Get's called once every frame-update
         /// </summary>
