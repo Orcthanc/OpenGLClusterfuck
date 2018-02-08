@@ -10,54 +10,35 @@ namespace OpenGLDoWhatYouWant
 {
     partial class Window
     {
-        bool keyDownA = false, keyDownD = false, keyDownW = false, keyDownS = false;
+        bool[] keyDown;
 
         protected void InitKeyboard()
         {
-
+            keyDown = new bool[Key.LastKey.GetHashCode()];
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             Console.WriteLine("[INFO] Key " + e.Key + " got pressed...");
 
+            keyDown[e.Key.GetHashCode()] = true;
+
             switch (e.Key)
             {
                 case Key.Escape:
                     Close();
-                    break;
-                case Key.A:
-                    keyDownA = true;
-                    break;
-                case Key.D:
-                    keyDownD = true;
-                    break;
-                case Key.W:
-                    keyDownW = true;
-                    break;
-                case Key.S:
-                    keyDownS = true;
                     break;
             }
         }
 
         protected override void OnKeyUp(KeyboardKeyEventArgs e)
         {
-            switch (e.Key)
-            {
-                case Key.A:
-                    keyDownA = false;
-                    break;
-                case Key.D:
-                    keyDownD = false;
-                    break;
-                case Key.W:
-                    keyDownW = false;
-                    break;
-                case Key.S:
-                    keyDownS = false;
-                    break;
-            }
+            
+            keyDown[e.Key.GetHashCode()] = false;
+
+            //switch (e.Key)
+            //{
+            //}
         }
     }
 }

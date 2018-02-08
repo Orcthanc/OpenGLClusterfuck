@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenTK;
+using OpenTK.Input;
 
 namespace OpenGLDoWhatYouWant
 {
@@ -19,13 +20,13 @@ namespace OpenGLDoWhatYouWant
         {
             Vector3 move = new Vector3();
 
-            if (keyDownA)
+            if (keyDown[Key.A.GetHashCode()])
                 move.X -= 1;
-            if (keyDownD)
+            if (keyDown[Key.D.GetHashCode()])
                 move.X += 1;
-            if (keyDownS)
+            if (keyDown[Key.S.GetHashCode()])
                 move.Z -= 1;
-            if (keyDownW)
+            if (keyDown[Key.W.GetHashCode()])
                 move.Z += 1;
 
             MoveCamera(move);

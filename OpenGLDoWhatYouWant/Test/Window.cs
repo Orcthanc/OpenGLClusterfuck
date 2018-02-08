@@ -23,6 +23,8 @@ namespace OpenGLDoWhatYouWant
         {
             base.OnLoad(e);
 
+            InitKeyboard();
+
             // Enables depth-checks to decide which object is rendered in the foreground
             GL.Enable(EnableCap.DepthTest);
             // Set's the color used to clear the background
