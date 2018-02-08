@@ -6,7 +6,12 @@ namespace OpenGLDoWhatYouWant
 {
     class ShaderLoader
     {
-
+        /// <summary>
+        /// Creates an OpenGL-Shader
+        /// </summary>
+        /// <param name="file">Source of the shader</param>
+        /// <param name="shadertype">Type of the shader</param>
+        /// <returns>A link to the shader</returns>
         public static int CreateShader(String file, ShaderType shadertype)
         {
             int shader = GL.CreateShader(shadertype);
@@ -25,6 +30,12 @@ namespace OpenGLDoWhatYouWant
             return shader;
         }
 
+        /// <summary>
+        /// Writes shaders into a program
+        /// </summary>
+        /// <param name="program">Where the Program is stored in OpenGL</param>
+        /// <param name="deleteShaders">If the shaders are to be deleted upon completion of the task</param>
+        /// <param name="shaders">All the shaders supposed to be packed into the program</param>
         public static void CreateProgram(int program, bool deleteShaders, params int[] shaders)
         {
             foreach (int i in shaders)
