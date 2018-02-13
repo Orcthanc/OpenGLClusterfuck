@@ -7,7 +7,7 @@ namespace OpenGLDoWhatYouWant
 {
     partial class Window : GameWindow
     {
-        int program, vao, vbo, modelLength;
+        int program, vao, vbo, modelLength, texture0;
 
         Matrix4 view;
 
@@ -62,6 +62,10 @@ namespace OpenGLDoWhatYouWant
                 BufferUsageHint.StaticDraw);
 
             ObjectLoader.ConfigureVaoForOBJTriangles();
+
+            //Load the Texture
+            GL.ActiveTexture(TextureUnit.Texture0);
+            texture0 = TextureLoader.LoadImage("./Textures/FlyingRobot.png");
 
         }
 
@@ -126,6 +130,12 @@ namespace OpenGLDoWhatYouWant
             int lightPosLoc = GL.GetUniformLocation(program, "lightPos");
             GL.Uniform3(lightPosLoc, ref lightPos);
 
+
+            // Texture stuff
+            GL.ActiveTexture(TextureUnit.Texture0);
+            GL.BindTexture(TextureTarget.Texture2D, texture0);
+
+            GL.Uniform1(GL.GetUniformLocation(program, "texture0"), 0);
 
             // Draws things, considering all applied things (You can draw an vbo 2 times if you apply different vectors and call this again)
             GL.DrawArrays(PrimitiveType.Triangles, 0, modelLength);
