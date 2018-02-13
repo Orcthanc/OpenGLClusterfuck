@@ -46,31 +46,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera.cs" />
-    <Compile Include="FileType.cs" />
-    <Compile Include="KeyboardHandler.cs" />
-    <Compile Include="ObjectLoader.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Window\Camera.cs" />
+    <Compile Include="Loader\FileType.cs" />
+    <Compile Include="Window\KeyboardHandler.cs" />
+    <Compile Include="Loader\ObjectLoader.cs" />
+    <Compile Include="Window\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShaderLoader.cs" />
-    <Compile Include="TextureLoader.cs" />
-    <Compile Include="Window.cs" />
+    <Compile Include="Loader\ShaderLoader.cs" />
+    <Compile Include="Loader\TextureLoader.cs" />
+    <Compile Include="Window\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="defaultFragment.glsl">
+    <None Include="Shaders\defaultFragment.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="flyingRobot.obj">
+    <None Include="Objects\flyingRobot.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="OpenTK.dll.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="defaultVertex.glsl">
+    <None Include="Shaders\defaultVertex.glsl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Textures\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

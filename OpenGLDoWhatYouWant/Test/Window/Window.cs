@@ -34,8 +34,8 @@ namespace OpenGLDoWhatYouWant
             program = GL.CreateProgram();
 
             // Creates a standard vertex- and fragment-shader
-            int vs = ShaderLoader.CreateShader("./defaultVertex.glsl", ShaderType.VertexShader);
-            int fs = ShaderLoader.CreateShader("./defaultFragment.glsl", ShaderType.FragmentShader);
+            int vs = ShaderLoader.CreateShader("./Shaders/defaultVertex.glsl", ShaderType.VertexShader);
+            int fs = ShaderLoader.CreateShader("./Shaders/defaultFragment.glsl", ShaderType.FragmentShader);
 
             // Create's a program using the shaders vs and fs in the space linked to by program
             ShaderLoader.CreateProgram(program, true, vs, fs);
@@ -50,7 +50,7 @@ namespace OpenGLDoWhatYouWant
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
 
             // Load the data from an .obj using the ObjectLoader-class
-            float[] data = ObjectLoader.LoadOBJTriangles("./flyingRobot.obj", out modelLength);
+            float[] data = ObjectLoader.LoadOBJTriangles("./Objects/flyingRobot.obj", out modelLength);
 
             // Put's some data into the vbo assigned to the vao inside of the ArrayBuffer BufferTarget
             GL.BufferData(BufferTarget.ArrayBuffer,
