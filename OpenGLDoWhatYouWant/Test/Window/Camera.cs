@@ -25,9 +25,9 @@ namespace OpenGLDoWhatYouWant
             if (keyDown[Key.D.GetHashCode()])
                 move.X += 1;
             if (keyDown[Key.S.GetHashCode()])
-                move.Z -= 1;
+                move.Y -= 1;
             if (keyDown[Key.W.GetHashCode()])
-                move.Z += 1;
+                move.Y += 1;
 
             MoveCamera(move);
         }

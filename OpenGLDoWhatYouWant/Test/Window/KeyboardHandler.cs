@@ -21,6 +21,9 @@ namespace OpenGLDoWhatYouWant
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
+            if (keyDown[e.Key.GetHashCode()])
+                return;
+
             Console.WriteLine("[INFO] Key " + e.Key + " got pressed");
 
             keyDown[e.Key.GetHashCode()] = true;

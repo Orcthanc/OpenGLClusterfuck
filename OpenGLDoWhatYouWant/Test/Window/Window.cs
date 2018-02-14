@@ -69,13 +69,6 @@ namespace OpenGLDoWhatYouWant
 
         }
 
-        protected override void OnUpdateFrame(FrameEventArgs e)
-        {
-            base.OnUpdateFrame(e);
-
-            UpdateCamera();
-        }
-
         /// <summary>
         /// Get's called once every frame-update
         /// </summary>
@@ -83,6 +76,9 @@ namespace OpenGLDoWhatYouWant
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
+
+            // What could this possibly do?
+            UpdateCamera();
 
             // Clears data...
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
