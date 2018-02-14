@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generator\TerrainGenerator.cs" />
     <Compile Include="Window\Camera.cs" />
     <Compile Include="Loader\FileType.cs" />
     <Compile Include="Window\KeyboardHandler.cs" />
