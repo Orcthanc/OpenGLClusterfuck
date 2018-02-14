@@ -26,7 +26,6 @@ void main(){
 	vec3 diffuse = diff * lightColor;
 
 	// Combining everything
-	vec3 result = (ambient + diffuse) * texture(texture0, texCoord);
-	FragColor = vec4(result, 1.0);
+	FragColor = vec4((ambient + diffuse), 1) * texture(texture0, texCoord);
 
 }

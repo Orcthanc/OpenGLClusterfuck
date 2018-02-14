@@ -51,7 +51,9 @@
     <Compile Include="Window\KeyboardHandler.cs" />
     <Compile Include="Loader\ObjectLoader.cs" />
     <Compile Include="Window\Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Loader\ShaderLoader.cs" />
     <Compile Include="Loader\TextureLoader.cs" />
     <Compile Include="Window\Window.cs" />
@@ -64,8 +66,12 @@
     <None Include="Objects\flyingRobot.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="OpenTK.dll.config" />
-    <None Include="packages.config" />
+    <None Include="OpenTK.dll.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\defaultVertex.glsl">
