@@ -7,6 +7,8 @@ namespace OpenGLDoWhatYouWant
 {
     partial class Window : GameWindow
     {
+        public float isometricFactor = 0.3f;
+
         int program, vao, vbo, modelLength, texture0;
 
         Matrix4 view;
@@ -96,7 +98,7 @@ namespace OpenGLDoWhatYouWant
             model = Matrix4.Mult(Matrix4.CreateScale(0.5f, 0.5f, 0.5f), model);
 
             // Updates the view Matrix
-            view = Matrix4.LookAt(camPos, camPos + camForward + new Vector3(0, 0.3f, 0), camUp);
+            view = Matrix4.LookAt(camPos, camPos + camForward + new Vector3(0, isometricFactor, 0), camUp);
 
             // Apply perspective to everything
             Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(90f / 180 * (float)Math.PI, Program.sizeX / Program.sizeY, 0.1f, 100f);
