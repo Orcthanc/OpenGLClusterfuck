@@ -10,7 +10,7 @@ namespace OpenGLDoWhatYouWant
 {
     partial class Window
     {
-        Vector3 camPos = new Vector3(0, 0, 3);
+        Vector3 camPos = new Vector3(0, 0, 10);
         Vector3 camForward = new Vector3(0, 0, -1);
         Vector3 camUp = new Vector3(0, 1, 0);
 

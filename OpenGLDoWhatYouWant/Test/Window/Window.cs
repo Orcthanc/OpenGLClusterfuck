@@ -98,10 +98,10 @@ namespace OpenGLDoWhatYouWant
             model = Matrix4.Mult(Matrix4.CreateScale(0.5f, 0.5f, 0.5f), model);
 
             // Updates the view Matrix
-            view = Matrix4.LookAt(camPos, camPos + camForward + new Vector3(0, isometricFactor, 0), camUp);
+            view = Matrix4.LookAt(camPos, camPos + camForward + new Vector3(0, isometricFactor, 0), camUp + new Vector3(0, 0, -isometricFactor));
 
             // Apply perspective to everything
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(90f / 180 * (float)Math.PI, Program.sizeX / Program.sizeY, 0.1f, 100f);
+            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView(45f / 180 * (float)Math.PI, Program.sizeX / Program.sizeY, 0.1f, 100f);
 
             // Send the matrixes to the Graphics-card
             int modelLoc = GL.GetUniformLocation(program, "model");
